@@ -18,7 +18,8 @@ function App() {
   const [searchValue, setSearchValue] = useState('');
   const [fetchTrigger, setFetchTrigger] = useState(false);
   const [totalPages, setTotalPages] = useState(0);
-  const API = 'https://api.unsplash.com/search/photos/?699065=UlsZFFEIpTmOt-55LHmhQDmOdPRfqKB3lYwdH7klus0}';
+  const API_KEY = 'UlsZFFEIpTmOt-55LHmhQDmOdPRfqKB3lYwdH7klus0';
+  const API = `https://api.unsplash.com/search/photos/?client_id=${API_KEY}`;
 
   useEffect(() => {
     if (searchValue) {
