@@ -12,7 +12,7 @@ const SearchBar = ({ onSubmit, onLoad, onReset }) => {
       placeholder="Search images and photos"
               />
               
-    <button type="submit" disabled={onLoad} onClick={onReset}>Search</button>
+    <button type="submit" disabled={onLoad}>Search</button>
           </form>
           <Toaster
   position="top-center"

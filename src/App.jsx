@@ -16,19 +16,25 @@ function App() {
   const [error, setError] = useState(false);
   const [page, setPage] = useState(1);
   const [searchValue, setSearchValue] = useState('');
+  const [fetchTrigger, setFetchTrigger] = useState(false);
   const API = `https://api.unsplash.com/search/photos/?client_id=${import.meta.env.VITE_API_KEY}`;
+
+  useEffect(() => {
+    if (searchValue) {
+      fetchImages(searchValue, page);
+    }
+  }, [fetchTrigger, page])
 
   const handleSubmit = async (evt) => {
     setImages([]);
     evt.preventDefault();
     const [input] = evt.target.elements;
-    setSearchValue(input.value.trim())
-  const searchInputValue = input.value.trim();
-   if (searchInputValue ==='') {
+    if (input.value.trim() === '') {
      return toast.error("Please enter a request")
-   }
-    const photos = await fetchImages(searchInputValue, page);
-    setImages(photos)
+    }
+    setPage(1);
+    setSearchValue(input.value.trim());
+    setFetchTrigger(prev => !prev);
    evt.target.reset();
   };
 
@@ -42,40 +48,27 @@ function App() {
           per_page: 20
         }
       });
-
-      console.log(response.data);
-      return response.data
+      console.log(response.data.results);
+      setImages((prev) => [...prev, ...response.data.results])
+      console.log(images);
     } catch (error) {
          setError(true);
       } finally {
       setLoading(false);
       }
   }
-
- const resetPage = () => {
-    setPage(1);
- }
   
- const changePage = () => {
-        setPage((prevPage) => prevPage + 1);
- };
-  
-  useEffect(() => {
-    if (page > 1) {
-      const handleClick = async () => {
-    const morePhotos = await fetchImages(searchValue, page);
-        setImages({...images, ...morePhotos})
-      }      
-   handleClick() }
-  }, [page])
+ const loadMore = () => {
+   setPage((prevPage) => prevPage + 1);
+   };
 
   return (
     <>
-      <SearchBar onSubmit={handleSubmit} onLoad={loading} onReset={resetPage} />
-      {images.total > 0 && <ImageGallery data={images} />}
+      <SearchBar onSubmit={handleSubmit} onLoad={loading} />
+      {images.length > 0 && <ImageGallery data={images} />}
       {loading && <Loader />}
       {error && <ErrorMessage />}
-      {images.total > 0 && images.total_pages > page && <LoadMoreBtn onClick={changePage} />}
+      {images.length > 0 && <LoadMoreBtn onClick={loadMore} />}
       <ImageModal />
     </>
   )
