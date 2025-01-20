@@ -17,6 +17,7 @@ function App() {
   const [page, setPage] = useState(1);
   const [searchValue, setSearchValue] = useState('');
   const [fetchTrigger, setFetchTrigger] = useState(false);
+  const [totalPages, setTotalPages] = useState(0);
   const API = `https://api.unsplash.com/search/photos/?client_id=${import.meta.env.VITE_API_KEY}`;
 
   useEffect(() => {
@@ -48,9 +49,8 @@ function App() {
           per_page: 20
         }
       });
-      console.log(response.data.results);
+      setTotalPages(response.data.total_pages);
       setImages((prev) => [...prev, ...response.data.results])
-      console.log(images);
     } catch (error) {
          setError(true);
       } finally {
@@ -68,7 +68,7 @@ function App() {
       {images.length > 0 && <ImageGallery data={images} />}
       {loading && <Loader />}
       {error && <ErrorMessage />}
-      {images.length > 0 && <LoadMoreBtn onClick={loadMore} />}
+      {images.length > 0 && totalPages > page && <LoadMoreBtn onClick={loadMore} />}
       <ImageModal />
     </>
   )
