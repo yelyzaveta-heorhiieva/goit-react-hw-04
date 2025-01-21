@@ -9,7 +9,6 @@ import ErrorMessage from './components/ErrorMessage/ErrorMessage'
 import axios from 'axios'
 import toast, { Toaster } from 'react-hot-toast';
 
-
 function App() {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -18,6 +17,8 @@ function App() {
   const [searchValue, setSearchValue] = useState('');
   const [fetchTrigger, setFetchTrigger] = useState(false);
   const [totalPages, setTotalPages] = useState(0);
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [item, setItem] = useState('')
   const API_KEY = 'UlsZFFEIpTmOt-55LHmhQDmOdPRfqKB3lYwdH7klus0';
   const API = `https://api.unsplash.com/search/photos/?client_id=${API_KEY}`;
 
@@ -61,16 +62,23 @@ function App() {
   
  const loadMore = () => {
    setPage((prevPage) => prevPage + 1);
-   };
+ };
+  
+  const openModal = (evt) => {
+    setIsOpen(true);
+    setItem(images.filter(image => image.urls.small === evt.target.src));
+  }
+  const closeModal = () => setIsOpen(false);
+ 
 
   return (
     <>
       <SearchBar onSubmit={handleSubmit} onLoad={loading} />
-      {images.length > 0 && <ImageGallery data={images} />}
+      {images.length > 0 && <ImageGallery data={images} openModal={openModal} />}
       {loading && <Loader />}
-      {error && <ErrorMessage />}
+      {(error && images.length <= 0) && <ErrorMessage />}
       {images.length > 0 && totalPages > page && <LoadMoreBtn onClick={loadMore} />}
-      <ImageModal />
+      <ImageModal onOpen={modalIsOpen} closeModal={closeModal} data={images} item={item} />
     </>
   )
 }

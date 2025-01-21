@@ -1,0 +1,29 @@
+.img {
+  height: 540px;
+  margin: 0 auto;
+}
+
+.item {
+  display: flex;
+  font-size: 24px;
+  gap: 40px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.options {
+  width: 30px;
+  height: 30px;
+}
+
+.modal {
+  position: absolute;
+  height: 590px;
+  top: 40px;
+  left: 50%;
+  right: auto;
+  bottom: 40px;
+  margin-right: -50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.57);
+}

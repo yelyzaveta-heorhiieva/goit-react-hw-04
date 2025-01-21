@@ -1,9 +1,9 @@
-import React from 'react'
+import s from './ErrorMessage.module.css'
 
 const ErrorMessage = () => {
   return (
     <>
-      <p>Whoops, something went wrong! Please try reloading this page!</p>
+      <p className={s.text}>Whoops, something went wrong! Please try reloading this page!</p>
     </>
   )
 }
