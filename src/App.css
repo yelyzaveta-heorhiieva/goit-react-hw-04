@@ -4,12 +4,6 @@
   padding: 20px;
 }
 
-.content {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
 h1,
 h2,
 h3,

@@ -1,6 +1,9 @@
 .img {
-  height: 540px;
+  max-height: 75vh;
+  min-width: 280px;
+  max-width: 90vw;
   margin: 0 auto;
+  object-fit: contain;
 }
 
 .item {
@@ -18,12 +21,10 @@
 
 .modal {
   position: absolute;
-  height: 590px;
-  top: 40px;
+  top: 50%;
   left: 50%;
   right: auto;
-  bottom: 40px;
   margin-right: -50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   background-color: rgba(0, 0, 0, 0.57);
 }
