@@ -24,7 +24,7 @@ const SearchBar = ({ onSubmit, onLoad }) => {
       type="text"
       autoComplete="off"
       autoFocus
-          placeholder="Search images and photos"
+          placeholder="Search images"
           className={s.input}
               />
               
